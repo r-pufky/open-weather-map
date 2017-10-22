@@ -8,7 +8,7 @@
 #
 
 import json
-import urllib.request
+import urllib2
 
 
 class OpenWeatherMap(object):
@@ -42,9 +42,10 @@ class OpenWeatherMap(object):
                                         endpoint,
                                         self.units,
                                         self.api_key)
-    with urllib.request.urlopen(query) as data:
-      json_data = data.read()
-      return json.loads(json_data.decode('utf-8'))
+    query = urllib2.Request(query)
+    data = urllib2.urlopen(query)
+    json_data = data.read()
+    return json.loads(json_data.decode('utf-8'))
 
   def GetCurrentWeather(self, city=5809844):
     """ Return dictionary with the current weather data for a given city.
